@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:name=".DemoApplication"
+        android:theme="@style/Theme.Demo"
+        tools:targetApi="31">
+
+        <activity
+            android:name=".DemoActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Demo">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:initOrder="100"
+            android:name="com.github.apkelly.demo.timing.TimingInitializationProvider"
+            android:authorities="${applicationId}demo-startup" />
+
+        <provider
+            android:initOrder="50"
+            android:name="com.github.apkelly.bolt.startup.BoltInitializationProvider"
+            android:authorities="${applicationId}.bolt-startup"
+            android:exported="false"
+            tools:node="merge">
+
+            <meta-data  android:name="com.github.apkelly.demo.startup.FastInitializer1" android:value="bolt.startup" />
+            <meta-data  android:name="com.github.apkelly.demo.startup.FastInitializer2" android:value="bolt.startup" />
+            <meta-data  android:name="com.github.apkelly.demo.startup.SlowInitializer1" android:value="bolt.startup" />
+            <meta-data  android:name="com.github.apkelly.demo.startup.SlowInitializer2" android:value="bolt.startup" />
+        </provider>
+
+    </application>
+
+</manifest>
