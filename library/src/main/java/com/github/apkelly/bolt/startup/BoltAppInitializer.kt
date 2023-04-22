@@ -62,7 +62,6 @@ class BoltAppInitializer(private val context: Context) {
                     buildTree(component)
                 }
 
-//                boltInitializerScope.launch {
                 println("pre-runBlocking")
                 runBlocking {
                     initializeTree()
@@ -76,19 +75,10 @@ class BoltAppInitializer(private val context: Context) {
 
     private fun buildTree(
         component: Class<out BoltInitializer>,
-//        initializing: MutableSet<Class<*>>
     ) {
         println("buildTree : ${component.name}")
-//        if (initializing.contains(component)) {
-//            val message = String.format(
-//                "Cannot initialize %s. Cycle detected.", component.name
-//            )
-//            throw IllegalStateException(message)
-//        }
 
         if (boltInitializerTreeRoot.findNode(component.name) == null) {
-            // Current component isn't in the dependency tree.
-//            initializing.add(component)
             try {
                 val initializer =
                     component.getDeclaredConstructor().newInstance() as BoltInitializer
@@ -102,10 +92,7 @@ class BoltAppInitializer(private val context: Context) {
                     for (clazz in dependencies) {
                         println("dep : ${clazz.name}")
 
-                        //                        if (!mInitialized.contains(clazz)) {
-//                            buildTree(clazz, initializing)
                         buildTree(clazz)
-//                        }
 
                         boltInitializerTreeRoot.findNode(clazz.name)?.let {node ->
                             node.dependencies.add(newNode)
@@ -119,10 +106,6 @@ class BoltAppInitializer(private val context: Context) {
                     boltInitializerTreeRoot.dependencies.add(newNode)
                 }
 
-//                initializing.remove(component)
-
-//                mInitialized += component
-
             } catch (throwable: Throwable) {
                 throw BoltException(throwable)
             }
@@ -134,7 +117,7 @@ class BoltAppInitializer(private val context: Context) {
 
         boltInitializerTreeRoot.printDependencyTree()
 
-        boltInitializerTreeRoot.getDepths().forEachIndexed { i, d ->
+        boltInitializerTreeRoot.traverseBreadthFirst().forEachIndexed { i, d ->
             println("Depth $i: $d")
 
             coroutineScope {
@@ -155,27 +138,7 @@ class BoltAppInitializer(private val context: Context) {
 
     }
 
-
-//    fun main() {
-//        val nodeA = BoltTreeNode("A", emptyList())
-//        val nodeB = BoltTreeNode("B", listOf(nodeA))
-//        val nodeC = BoltTreeNode("C", listOf(nodeB))
-//        val nodeD = BoltTreeNode("D", listOf(nodeB, nodeC))
-//        val rootNode = BoltTreeNode("Root", listOf(nodeD))
-//        printDependencyTree(rootNode)
-//    }
-
-    private fun BoltTreeNode.traverseBreadthFirst(visit: (BoltTreeNode) -> Unit) {
-        val queue = mutableListOf<BoltTreeNode>()
-        queue.add(this)
-        while (queue.isNotEmpty()) {
-            val currentNode = queue.removeAt(0)
-            visit(currentNode)
-            queue.addAll(currentNode.dependencies)
-        }
-    }
-
-    private fun BoltTreeNode.getDepths(): List<List<BoltTreeNode>> {
+    private fun BoltTreeNode.traverseBreadthFirst(): List<List<BoltTreeNode>> {
         val result = mutableListOf<MutableList<BoltTreeNode>>()
         val queue = mutableListOf<Pair<BoltTreeNode, Int>>()
         queue.add(this to 0)
