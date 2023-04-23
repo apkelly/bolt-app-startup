@@ -13,6 +13,6 @@ class SlowInitializer2: BoltInitializer {
     }
 
     override fun dependencies(): List<Class<out BoltInitializer>> {
-        return emptyList()
+        return listOf(FastInitializer2::class.java)
     }
 }

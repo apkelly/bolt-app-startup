@@ -76,7 +76,7 @@ class BoltAppInitializer(private val context: Context) {
     private fun buildTree(
         component: Class<out BoltInitializer>,
     ) {
-        println("buildTree : ${component.name}")
+//        println("buildTree : ${component.name}")
 
         if (boltInitializerTreeRoot.findNode(component.name) == null) {
             try {
@@ -88,9 +88,9 @@ class BoltAppInitializer(private val context: Context) {
 
                 if (dependencies.isNotEmpty()) {
 
-                    println("dependencies : ${component.name}")
+//                    println("dependencies : ${component.name}")
                     for (clazz in dependencies) {
-                        println("dep : ${clazz.name}")
+//                        println("dep : ${clazz.name}")
 
                         buildTree(clazz)
 
@@ -100,7 +100,7 @@ class BoltAppInitializer(private val context: Context) {
                     }
 
                 } else {
-                    println("add node to root.")
+//                    println("add node to root.")
 
                     // This component has no dependencies, so add this node to the root of the tree
                     boltInitializerTreeRoot.dependencies.add(newNode)
@@ -123,7 +123,7 @@ class BoltAppInitializer(private val context: Context) {
             coroutineScope {
                 if (i != 0) {
                     val deferredJob = d.map { node ->
-                        println("node : ${node.name}")
+//                        println("node : ${node.name}")
                         val component = Class.forName(node.name) as Class<BoltInitializer>
                         val initializer =
                             component.getDeclaredConstructor().newInstance() as BoltInitializer
