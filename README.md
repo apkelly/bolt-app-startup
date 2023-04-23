@@ -8,12 +8,12 @@ So Bolt seemed like a fitting name for a library that aims to initialise your An
 ## The problem
 The App Startup library from Google uses a system of initializers to setup the different dependencies for your Android app.
 
-However, these dependencies are created synchonously, which means the time to start your app is the sum of all the time taken by each initializer.
+However, these dependencies are created synchronously, which means the time to start your app is the sum of all the time taken by each initializer.
 
 ## The solution
-The Bolt App Startup library uses Kotlin Coroutines to initialise the dependencies for your Android app asynchonously.
+The Bolt App Startup library uses Kotlin Coroutines to initialise the dependencies for your Android app asynchronously.
 
-This means an a reduction in the time taken to launch your app.
+This means a reduction in the time taken to launch your app.
 
 ## How it works
 
@@ -21,7 +21,7 @@ Rather than initialising each dependency in sequence, as done by the Google libr
 
 This tree is parsed in a breadth first search, and the optimisations come from our ability to initialise all the nodes (or dependencies) at a given depth at the same time.
 
-Once a given depth has been initialised, we move on to the next one, until there are no more.
+Once a given depth has been initialised, we move deeper to the next one, until there are no more.
 
 ## The improvements
 
