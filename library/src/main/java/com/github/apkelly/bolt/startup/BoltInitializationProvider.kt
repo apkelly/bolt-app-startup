@@ -8,8 +8,9 @@ import android.net.Uri
 class BoltInitializationProvider: ContentProvider() {
 
     override fun onCreate(): Boolean {
-        if (context != null) {
-            BoltAppInitializer.getInstance(context).discoverAndInitialize()
+        val ctx = context
+        if (ctx != null) {
+            BoltAppInitializer.getInstance(ctx).discoverAndInitialize()
         } else {
             throw BoltException("Context cannot be null")
         }
