@@ -11,7 +11,9 @@
   <component name="ChangeListManager">
     <list default="true" id="ac11305d-bde4-4862-b9f8-e450a51b166e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/apkelly/demo/startup/SlowInitializer2.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/apkelly/demo/startup/SlowInitializer2.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/library/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/library/src/main/java/com/github/apkelly/bolt/startup/BoltAppInitializer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/github/apkelly/bolt/startup/BoltAppInitializer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/library/src/main/java/com/github/apkelly/bolt/startup/BoltInitializationProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/github/apkelly/bolt/startup/BoltInitializationProvider.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +25,18 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -52,13 +66,15 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
+    "android.gradle.sync.needed": "true",
     "cidr.known.project.marker": "true",
-    "last_opened_file_path": "/Users/andy/Development/personal/bolt-app-startup/app/src/main/java/com/github/apkelly/demo/ui/theme",
+    "last_opened_file_path": "/Users/andy/Development/personal/Bolt-App-Startup/app/src/main/java/com/github/apkelly/demo/startup",
     "settings.editor.selected.configurable": "configurable.group.appearance"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/java/com/github/apkelly/demo/startup" />
       <recent name="$PROJECT_DIR$/app/src/main/java/com/github/apkelly/demo/ui/theme" />
       <recent name="$PROJECT_DIR$/library/src/main/java/com/github/apkelly/bolt/startup" />
     </key>

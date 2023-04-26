@@ -12,13 +12,16 @@ import kotlinx.coroutines.runBlocking
 
 class BoltAppInitializer(private val context: Context) {
 
-    private val mDiscovered: MutableSet<Class<out BoltInitializer?>> = mutableSetOf()
+    // The list of BoltInitializers in the AndroidManifest.xml file.
+    private val manifestInitializers: MutableSet<Class<out BoltInitializer?>> = mutableSetOf()
 
+    // A node in the dependency tree.
     private data class BoltTreeNode(
         val name: String,
         val dependencies: MutableList<BoltTreeNode> = mutableListOf()
     )
 
+    // The root node of the dependency tree.
     private val boltInitializerTreeRoot = BoltTreeNode(name = "root")
 
     companion object {
@@ -27,6 +30,10 @@ class BoltAppInitializer(private val context: Context) {
         }
     }
 
+    /**
+     * Fetch the AndroidManifest.xml meta-data and
+     * start the initializatoin process.
+     */
     fun discoverAndInitialize() {
         try {
             val provider = ComponentName(
@@ -42,6 +49,11 @@ class BoltAppInitializer(private val context: Context) {
         }
     }
 
+    /**
+     * Using the BoltInitializers in the AndroidManifest.xml as a
+     * starting point, build a dependency tree and then initialise
+     * the components asynchronously.
+     */
     private fun discoverAndInitialize(metadata: Bundle?) {
         val startup = context.getString(R.string.bolt_startup)
         try {
@@ -53,15 +65,17 @@ class BoltAppInitializer(private val context: Context) {
                         val clazz = Class.forName(key)
                         if (BoltInitializer::class.java.isAssignableFrom(clazz)) {
                             val component = clazz as Class<out BoltInitializer>
-                            mDiscovered.add(component)
+                            manifestInitializers.add(component)
                         }
                     }
                 }
 
-                for (component in mDiscovered) {
+                // Using the entries in the manifest, build a tree of dependencies.
+                for (component in manifestInitializers) {
                     buildTree(component)
                 }
 
+                // Tree is build, initialise each of the components.
                 println("pre-runBlocking")
                 runBlocking {
                     initializeTree()
@@ -73,6 +87,12 @@ class BoltAppInitializer(private val context: Context) {
         }
     }
 
+    /**
+     * For a given BoltInitializer instance parse its
+     * dependencies and add them to the dependency tree.
+     *
+     * This method is called recursively.
+     */
     private fun buildTree(
         component: Class<out BoltInitializer>,
     ) {
@@ -112,17 +132,22 @@ class BoltAppInitializer(private val context: Context) {
         }
     }
 
+    /**
+     * Parse dependency tree and initialise all the
+     * components together at a given depth in the tree.
+     */
     private suspend fun initializeTree() {
         println("initializeTree")
 
         boltInitializerTreeRoot.printDependencyTree()
 
-        boltInitializerTreeRoot.traverseBreadthFirst().forEachIndexed { i, d ->
-            println("Depth $i: $d")
-
+        boltInitializerTreeRoot.traverseBreadthFirst().forEachIndexed { depth, nodesAtDepth ->
             coroutineScope {
-                if (i != 0) {
-                    val deferredJob = d.map { node ->
+                // We don't initialise the root node, so skip it.
+                if (depth != 0) {
+                    println("Depth $depth: $nodesAtDepth")
+
+                    val deferredJobs = nodesAtDepth.map { node ->
 //                        println("node : ${node.name}")
                         val component = Class.forName(node.name) as Class<BoltInitializer>
                         val initializer =
@@ -130,7 +155,7 @@ class BoltAppInitializer(private val context: Context) {
                         async { initializer.create(context) }
                     }
                     println("pre-await")
-                    deferredJob.awaitAll()
+                    deferredJobs.awaitAll()
                     println("post-await")
                 }
             }
@@ -138,6 +163,11 @@ class BoltAppInitializer(private val context: Context) {
 
     }
 
+    /**
+     * Create a list of nodes for each depth in our tree. Best case scenario is
+     * a single depth (one list), worst case is "n" depth, where we have a lot
+     * of lists, each with a single node.
+     */
     private fun BoltTreeNode.traverseBreadthFirst(): List<List<BoltTreeNode>> {
         val result = mutableListOf<MutableList<BoltTreeNode>>()
         val queue = mutableListOf<Pair<BoltTreeNode, Int>>()
@@ -156,6 +186,10 @@ class BoltAppInitializer(private val context: Context) {
     }
 
 
+    /**
+     * The dependency tree we create isn't sorted or balanced, so we
+     * search every node until we find the one we're looking for.
+     */
     private fun BoltTreeNode.findNode(targetName: String): BoltTreeNode? {
         if (this.name == targetName) {
             return this
@@ -169,6 +203,9 @@ class BoltAppInitializer(private val context: Context) {
         return null
     }
 
+    /**
+     * Print a visual representation of the dependency tree.
+     */
     private fun BoltTreeNode.printDependencyTree(indent: String = "") {
         println(indent + this.name)
         for (dependency in this.dependencies) {
