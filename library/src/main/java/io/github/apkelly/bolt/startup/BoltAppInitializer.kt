@@ -1,4 +1,4 @@
-package com.github.apkelly.bolt.startup
+package io.github.apkelly.bolt.startup
 
 import android.content.ComponentName
 import android.content.Context

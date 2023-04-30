@@ -1,4 +1,4 @@
-package com.github.apkelly.demo
+package io.github.apkelly.demo
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -15,7 +15,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.github.apkelly.demo.ui.theme.DemoTheme
+import io.github.apkelly.demo.ui.theme.DemoTheme
 import java.time.LocalTime
 
 class DemoActivity : ComponentActivity() {

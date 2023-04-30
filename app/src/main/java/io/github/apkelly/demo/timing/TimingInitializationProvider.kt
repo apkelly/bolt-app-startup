@@ -1,33 +1,31 @@
-package com.github.apkelly.bolt.startup
+package io.github.apkelly.demo.timing
 
 import android.content.ContentProvider
 import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
+import io.github.apkelly.demo.Timing
+import java.time.LocalTime
 
-class BoltInitializationProvider: ContentProvider() {
+class TimingInitializationProvider : ContentProvider() {
 
     override fun onCreate(): Boolean {
-        val ctx = context
-        if (ctx != null) {
-            BoltAppInitializer.getInstance(ctx).discoverAndInitialize()
-        } else {
-            throw BoltException("Context cannot be null")
-        }
+        println("TimingInitializationProvider onCreate")
+        Timing.providerOnCreate = LocalTime.now()
 
         return true
     }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
-        TODO("Not needed")
+        TODO("Not yet implemented")
     }
 
     override fun getType(uri: Uri): String? {
-        TODO("Not needed")
+        TODO("Not yet implemented")
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
-        TODO("Not needed")
+        TODO("Not yet implemented")
     }
 
     override fun query(
@@ -37,7 +35,7 @@ class BoltInitializationProvider: ContentProvider() {
         selectionArgs: Array<out String>?,
         sortOrder: String?
     ): Cursor? {
-        TODO("Not needed")
+        TODO("Not yet implemented")
     }
 
     override fun update(
@@ -46,6 +44,6 @@ class BoltInitializationProvider: ContentProvider() {
         selection: String?,
         selectionArgs: Array<out String>?
     ): Int {
-        TODO("Not needed")
+        TODO("Not yet implemented")
     }
 }

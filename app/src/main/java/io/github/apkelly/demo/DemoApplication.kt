@@ -1,4 +1,4 @@
-package com.github.apkelly.demo
+package io.github.apkelly.demo
 
 import android.app.Application
 import java.time.LocalTime

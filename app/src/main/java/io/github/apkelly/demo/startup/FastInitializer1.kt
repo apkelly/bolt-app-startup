@@ -1,7 +1,7 @@
-package com.github.apkelly.demo.startup
+package io.github.apkelly.demo.startup
 
 import android.content.Context
-import com.github.apkelly.bolt.startup.BoltInitializer
+import io.github.apkelly.bolt.startup.BoltInitializer
 import kotlinx.coroutines.delay
 
 class FastInitializer1: BoltInitializer {

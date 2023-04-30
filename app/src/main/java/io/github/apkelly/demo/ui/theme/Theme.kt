@@ -1,4 +1,4 @@
-package com.github.apkelly.demo.ui.theme
+package io.github.apkelly.demo.ui.theme
 
 import android.app.Activity
 import android.os.Build

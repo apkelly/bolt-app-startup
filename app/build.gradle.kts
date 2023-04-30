@@ -1,14 +1,15 @@
+@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
 }
 
 android {
-    namespace = "com.github.apkelly.demo"
+    namespace = "io.github.apkelly.demo"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.github.apkelly.demo"
+        applicationId = "io.github.apkelly.demo"
         minSdk = 26
         targetSdk = 33
         versionCode = 1

@@ -1,4 +1,4 @@
-package com.github.apkelly.demo.ui.theme
+package io.github.apkelly.demo.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

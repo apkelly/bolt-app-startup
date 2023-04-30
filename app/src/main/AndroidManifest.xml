@@ -28,20 +28,20 @@
 
         <provider
             android:initOrder="100"
-            android:name="com.github.apkelly.demo.timing.TimingInitializationProvider"
+            android:name="io.github.apkelly.demo.timing.TimingInitializationProvider"
             android:authorities="${applicationId}demo-startup" />
 
         <provider
             android:initOrder="50"
-            android:name="com.github.apkelly.bolt.startup.BoltInitializationProvider"
+            android:name="io.github.apkelly.bolt.startup.BoltInitializationProvider"
             android:authorities="${applicationId}.bolt-startup"
             android:exported="false"
             tools:node="merge">
 
-            <meta-data  android:name="com.github.apkelly.demo.startup.FastInitializer1" android:value="bolt.startup" />
-            <meta-data  android:name="com.github.apkelly.demo.startup.FastInitializer2" android:value="bolt.startup" />
-            <meta-data  android:name="com.github.apkelly.demo.startup.SlowInitializer1" android:value="bolt.startup" />
-            <meta-data  android:name="com.github.apkelly.demo.startup.SlowInitializer2" android:value="bolt.startup" />
+            <meta-data  android:name="io.github.apkelly.demo.startup.FastInitializer1" android:value="bolt.startup" />
+            <meta-data  android:name="io.github.apkelly.demo.startup.FastInitializer2" android:value="bolt.startup" />
+            <meta-data  android:name="io.github.apkelly.demo.startup.SlowInitializer1" android:value="bolt.startup" />
+            <meta-data  android:name="io.github.apkelly.demo.startup.SlowInitializer2" android:value="bolt.startup" />
         </provider>
 
     </application>
